@@ -23,7 +23,7 @@ describe Story do
 
     describe "and when there are less than 3 labels" do
       it "should return them in a nice format" do
-        story.labels="test1, test2"
+        story.labels="test1,test2"
         story.label_text.should == "test1, test2"
       end
     end

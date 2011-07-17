@@ -1,7 +1,7 @@
 class Story < Pivotal
   def label_text
     return "" if !self.respond_to?(:labels) || self.labels.nil? || self.labels.empty?
-    labels
+    labels.split(',').join(', ')
   end
 
   def points
