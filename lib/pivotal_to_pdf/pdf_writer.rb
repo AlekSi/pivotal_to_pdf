@@ -9,7 +9,7 @@ class PdfWriter
   def initialize(story_or_iteration, colored_stripe = true)
     @story_or_iteration = story_or_iteration
     @stories = story_or_iteration.is_a?(Iteration) ? story_or_iteration.stories : [story_or_iteration]
-    p stories.size
+    puts "Stories: #{stories.size}"
   end
 
   def write_to
@@ -45,7 +45,8 @@ class PdfWriter
           :size => 8, :at => [12, 18], :width => width-18
 
         pdf.fill_color "999999"
-        pdf.text_box story.story_type.capitalize,  :size => 8,  :align => :right, :at => [12, 18], :width => width-18
+        pdf.text_box "#{story.story_type.capitalize} ##{story.id}",
+          :size => 8,  :align => :right, :at => [12, 18], :width => width-18
         pdf.fill_color "000000"
         pdf.start_new_page unless index == stories.size - 1
       end
