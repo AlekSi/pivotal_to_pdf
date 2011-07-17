@@ -3,3 +3,4 @@
 *.pdf
 pkg
 .pivotal.yml
+.bundle
