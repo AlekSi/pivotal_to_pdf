@@ -9,6 +9,11 @@ class Story < Pivotal
     "Points: " + (self.respond_to?(:estimate) && !self.estimate.eql?(-1) ? self.estimate.to_s : "Not yet estimated")
   end
 
+  def owner
+    return "None" if !self.respond_to?(:owned_by) || self.owned_by.nil? || self.owned_by.empty?
+    owned_by
+  end
+
   def story_color
     return "52D017" if feature?
     return "FF0000" if bug?
