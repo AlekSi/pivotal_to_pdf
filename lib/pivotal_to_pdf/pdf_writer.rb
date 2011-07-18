@@ -8,7 +8,11 @@ class PdfWriter
   attr_reader :story_or_iteration, :stories
   def initialize(story_or_iteration, colored_stripe = true)
     @story_or_iteration = story_or_iteration
-    @stories = story_or_iteration.is_a?(Iteration) ? story_or_iteration.stories : [story_or_iteration]
+    if story_or_iteration.is_a?(Iteration)
+      @stories = story_or_iteration.stories.reject { |story| story.story_type == 'release' }
+    else
+      @stories = [story_or_iteration]
+    end
     puts "Stories: #{stories.size}"
   end
 

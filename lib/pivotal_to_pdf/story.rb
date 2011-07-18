@@ -13,6 +13,7 @@ class Story < Pivotal
     return "52D017" if feature?
     return "FF0000" if bug?
     return "FFFF00" if chore?
+    raise "Unknown story type: #{story_type}"
   end
 
   private
