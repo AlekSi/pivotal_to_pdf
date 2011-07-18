@@ -23,13 +23,15 @@ class PdfWriter
                              :page_size   => [302, 432]) do |pdf|
 
       pdf.font "#{Prawn::BASEDIR}/data/fonts/DejaVuSans.ttf"
-      # pdf.start_new_page
 
       stories.each_with_index do |story, index|
+        pdf.start_new_page unless index == 0
+
+        width = 370
         padding = 10
+        pdf.fill_color "000000"
         pdf.stroke_color = story.story_color
         pdf.stroke_bounds
-        width = 370
         pdf.line_width=6
         # --- Write content
         pdf.bounding_box [pdf.bounds.left+padding, pdf.bounds.top-padding], :width => width do
@@ -50,10 +52,7 @@ class PdfWriter
         pdf.fill_color "999999"
         pdf.text_box "#{story.story_type.capitalize} ##{story.id}",
           :size => 8,  :align => :right, :at => [12, 18], :width => width-18
-        pdf.fill_color "000000"
-        pdf.start_new_page unless index == stories.size - 1
       end
-      pdf.number_pages "<page>/<total>", {:at => [pdf.bounds.right - 16, -28]}
 
       puts ">>> Generated PDF file in '#{story_or_iteration.id}.pdf'".foreground(:green)
   end
