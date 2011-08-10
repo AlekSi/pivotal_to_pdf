@@ -5,19 +5,20 @@ require 'prawn'
 require 'rainbow'
 
 class PdfWriter
-  attr_reader :story_or_iteration, :stories
-  def initialize(story_or_iteration, colored_stripe = true)
-    @story_or_iteration = story_or_iteration
-    if story_or_iteration.is_a?(Iteration)
-      @stories = story_or_iteration.stories.reject { |story| story.story_type == 'release' }
+  attr_reader :filename, :stories
+  def initialize(stories_or_iteration, colored_stripe = true)
+    if stories_or_iteration.is_a?(Iteration)
+      @filename = "#{stories_or_iteration.id}.pdf"
+      @stories = stories_or_iteration.stories.reject { |story| story.story_type == 'release' }
     else
-      @stories = [story_or_iteration]
+      @filename = "#{stories_or_iteration.map(&:id).join('-')}.pdf"
+      @stories = stories_or_iteration
     end
     puts "Stories: #{stories.size}"
   end
 
   def write_to
-    Prawn::Document.generate("#{story_or_iteration.id}.pdf",
+    Prawn::Document.generate(filename,
                              :page_layout => :landscape,
                              :margin      => 15,
                              :page_size   => 'A6') do |pdf|
@@ -55,7 +56,7 @@ class PdfWriter
         pdf.stroke_bounds
       end
 
-      puts ">>> Generated PDF file in '#{story_or_iteration.id}.pdf'".foreground(:green)
+      puts ">>> Generated PDF file in '#{filename}'".foreground(:green)
   end
   rescue Exception
     puts "[!] There was an error while generating the PDF file... What happened was:".foreground(:red)

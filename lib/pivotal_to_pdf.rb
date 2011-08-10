@@ -8,9 +8,12 @@ require 'pivotal_to_pdf/story'
 require 'pivotal_to_pdf/pdf_writer'
 class PivotalToPdf < Thor
   class << self
-    def story(story_id, colored_stripe=true)
-      story = Story.find(story_id)
-      PdfWriter.new(story, colored_stripe).write_to
+    def story(story_ids, colored_stripe=true)
+      stories = []
+      story_ids.split(',').each do |story_id|
+        stories << Story.find(story_id)
+      end
+      PdfWriter.new(stories, colored_stripe).write_to
     end
 
     def iteration(iteration_token, colored_stripe=true)
