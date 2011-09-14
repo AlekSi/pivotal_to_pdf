@@ -1,3 +1,5 @@
+source :rubygems
+
 gem 'rainbow'
 gem 'activeresource'
 gem 'prawn'
