@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'rainbow'
 require 'thor'
 require 'active_resource'

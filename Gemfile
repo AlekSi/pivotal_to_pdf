@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'rainbow'
-gem 'activeresource'
+gem 'activeresource', '~> 3.0.10'
 gem 'prawn'
 gem 'thor'
 
